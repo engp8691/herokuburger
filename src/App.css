@@ -1,0 +1,20 @@
+.body {
+	margin: 0;
+	padding: 0;
+	font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+.chineseFont{
+	font-family: 'ZCOOL QingKe HuangYou', cursive;
+	font-size: 20px;
+}
+
+.kuaileFont{
+	font-family: 'ZCOOL KuaiLe', cursive;
+	font-size: 20px;
+}
+
+.notoscFont{
+	font-family: 'Noto Sans SC', sans-serif;
+	font-size: 20px;
+}
