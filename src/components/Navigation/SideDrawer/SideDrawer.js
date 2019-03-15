@@ -13,7 +13,9 @@ const sideDrawer = (props)=>{
 
 	return (
 		<>
-			<Backdrop backdropClicked={props.closehandler} show={props.open} />
+			{
+				props.open ? (<Backdrop backdropClicked={props.closehandler} show={props.open} />) : null
+			}
 			<div className={attachedClasses.join(' ')}>
 				<div className={classes.Logo}>
 					<Logo />

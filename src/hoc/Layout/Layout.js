@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Toolbar from '../Navigation/Toolbar/Toolbar';
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
 import BurgerBuilder from '../../containers/BurgerBuilder/BurgerBuilder';
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 import './Layout.css';
 
@@ -11,7 +11,7 @@ class Layout extends Component {
 		super(props);
 
 		this.state = {
-			showSideDrawer: true
+			showSideDrawer: false
 		}
 	}
 
@@ -29,10 +29,10 @@ class Layout extends Component {
 		return (
 			<>
 				<Toolbar showSideDraw={this.sideDrawerToggleHandler} />
-				<SideDrawer 
-					closehandler = {this.sideDrawerClosedHandler} 
-					open = {this.state.showSideDrawer}
-				/>
+				{
+					this.state.showSideDrawer ? (<SideDrawer closehandler = {this.sideDrawerClosedHandler} open = {this.state.showSideDrawer} />) : null
+				}
+
 				<main className="Content">
 					<BurgerBuilder />
 				</main>

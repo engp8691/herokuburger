@@ -11,8 +11,6 @@ const controls = [
 ];
 
 const buildControls = (props)=>{
-	console.log(14, props);
-
 	return (
 		<div className={classes.BuildControls}>
 		<p>Current Price: ${props.totalPrice}</p>

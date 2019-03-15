@@ -22,8 +22,6 @@ const burger = (props)=>{
 		return arr.concat(elem);
 	});
 
-	console.log(23, otherIngredients);
-
 	if(otherIngredients.length === 0){
 		otherIngredients = (<p className={classes.info}>请选择您的食材</p>);
 	}

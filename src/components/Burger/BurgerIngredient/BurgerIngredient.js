@@ -7,8 +7,6 @@ class BurgerIngredient extends Component {
 	render(){
 		let ingredient = null;
 
-		console.log(10, this.props.type);
-
 		switch(this.props.type){
 			case ('bread-bottom'):
 				ingredient = <div className={classes.BreadBottom}></div>
@@ -36,8 +34,6 @@ class BurgerIngredient extends Component {
 			default:
 				ingredient = null;
 		}
-
-		console.log(40, ingredient);
 
 		return ingredient;
 	}

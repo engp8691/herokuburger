@@ -49,7 +49,7 @@ class BurgerBuilder extends Component{
 		const additionalPrice = INGREDIENT_PRICES[type];
 		const updatedPrice = this.state.totalPrice + additionalPrice;
 		const purchasable = this.isPurchasable(updatedIngredients);
-		console.log(49, purchasable);
+
 		this.setState({
 			ingredients: updatedIngredients,
 			totalPrice: updatedPrice,
@@ -68,7 +68,7 @@ class BurgerBuilder extends Component{
 		const additionalPrice = INGREDIENT_PRICES[type];
 		const updatedPrice = this.state.totalPrice - additionalPrice;
 		const purchasable = this.isPurchasable(updatedIngredients);
-		console.log(68, purchasable);
+
 		this.setState({
 			ingredients: updatedIngredients,
 			totalPrice: updatedPrice,
