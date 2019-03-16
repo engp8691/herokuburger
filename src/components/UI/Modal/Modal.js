@@ -4,18 +4,24 @@ import classes from './Modal.module.css'
 
 class Modal extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+		/*
 		if(nextProps.show === this.props.show){
-			return false;
+			if(nextProps.loading !== this.props.loading){
+				return true;
+			}else{
+				return false;
+			}
 		}else{
 			return true;
 		}
+		*/
 	}
 
 	render(){
 		return (
 			<>
-			<Backdrop show={this.props.show} backdropClicked={this.props.backdropClicked}>
-			</Backdrop>
+			<Backdrop show={this.props.show} backdropClicked={this.props.backdropClicked}> </Backdrop>
 			{
 				this.props.show? (
 				<div className={classes.Modal}
