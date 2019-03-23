@@ -45,21 +45,13 @@ class Checkout extends Component {
 	}
 
 	render(){
+		const myCheckoutSummary = <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelled} checkoutContinued={this.checkoutContinued} />;
+		const myContactData = <ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...this.props} />;
+
 		return (
 			<div>
-				<CheckoutSummary
-					ingredients={this.state.ingredients}
-					checkoutCancelled={this.checkoutCancelled}
-					checkoutContinued={this.checkoutContinued}
-				/>
-
-				{
-					// the props parameter is used to pass the router properties to the contact data component
-				}
-				<Route 
-					path={this.props.match.path + '/contact-data'}
-					render={(props)=>(<ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...props} />)}
-				/>
+				<Route exact path={this.props.match.path} render={(props)=>myCheckoutSummary} />
+				<Route path={this.props.match.path + '/contact-data'} render={(props)=>myContactData} />
 			</div>
 		);
 	}
