@@ -1,0 +1,37 @@
+.Input {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.Label {
+	width: 100%;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 8px;
+	margin-left: 0px;
+	text-align: left;
+	text-transform: lowercase;
+	box-sizing: border-box;
+}
+
+.Label::first-letter{
+	 text-transform: uppercase;
+}
+
+.InputElement {
+	width: 100%;
+	outline: none;
+	border: 1px solid #ccc;
+	background-color: white;
+	font: inherit;
+	padding: 6px 10px;
+	box-sizing: border-box;
+}
+
+.InputElement:focus {
+	outline: none;
+	background-color: #ccc;
+	box-sizing: border-box;
+}
+

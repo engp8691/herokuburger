@@ -71,17 +71,22 @@ class ContactData extends Component {
 	orderHandler = (event)=>{
 		event.preventDefault();
 		console.log("clicked", this.props.ingredients, this.props.totalPrice);
-		this.setState({loading: true});
 
-		const formData = {};
-		for(let formElementIdentifier in this.state.orderForm){
-			formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
-		}
+		this.setState({loading: true});
 
 		const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-			orderData: formData
+            customer: {
+                name: 'Yonglin',
+                address: {
+                    street: 'Cypress street',
+                    zipCode: '02445',
+                    state: 'MA'
+                },
+                email: 'yonglin@tom.com'
+            },
+            deliveryMethod: 'fastest'
         };
 
         axiosinstance.post('/orders.json', order).then(
@@ -96,27 +101,18 @@ class ContactData extends Component {
 	}
 
 	changeHandler = (event, inputIdentifier)=>{
-		console.log(104, event.target.value, inputIdentifier);
-
-		const updatedOrderForm = {
-			...this.state.orderForm
-		};
-		const updatedElement = {
-			...updatedOrderForm[inputIdentifier]
-		};
-
-		updatedElement.value=event.target.value;
-		updatedOrderForm[inputIdentifier] = updatedElement;
-
-		this.setState({orderForm: updatedOrderForm});
+		// console.log(event.target.value, inputIdentifier);
+		const myField = {...this.state.orderForm[inputIdentifier]};
+		myField.value=event.target.value;
+		console.log(106, myField);
+		this.setState(this.state.orderForm[inputIdentifier], myField);
 	}
 
 	render(){
 		let formElementsArray = [];
 		const keys = Object.keys(this.state.orderForm);
+		console.log(106, keys);
 		formElementsArray = keys.map((elem)=>{
-			console.log(122, this.state.orderForm[elem].value);
-
 			return (
 			<Input
 				key={elem}
@@ -130,10 +126,10 @@ class ContactData extends Component {
 		});
 
 		let form = (
-			<form onSubmit={this.orderHandler}>
+			<form>
 				{formElementsArray}
 
-				<Button btnType='Success'>ORDER</Button>
+				<Button clickHandler={this.orderHandler} btnType='Success'>ORDER</Button>
 			</form>
 		);
 

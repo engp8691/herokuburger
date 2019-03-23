@@ -56,10 +56,10 @@ class Checkout extends Component {
 				{
 					// the props parameter is used to pass the router properties to the contact data component
 				}
-				(<Route 
+				<Route 
 					path={this.props.match.path + '/contact-data'}
 					render={(props)=>(<ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...props} />)}
-				/>)
+				/>
 			</div>
 		);
 	}
