@@ -23,3 +23,8 @@
     color: #944317;
 }
 
+.Disabled {
+    color: #cccccc;
+	cursor: default;
+}
+
