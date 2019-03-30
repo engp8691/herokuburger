@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
-import axiosinstance from '../../../axios-orders';
+// import axiosinstance from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import Input from '../../../components/UI/Input/Input';
 
 import classes from './ContactData.module.css';
+
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
 	constructor(props){
@@ -90,18 +93,18 @@ class ContactData extends Component {
 							{value: 'fastest', displayValue: 'Fatest'},
 							{value: 'cheapest', displayValue: 'Slowest'}
 						]
-					}
+					},
+					value: 'fastest',
+					validation: {},
+					valid: true
 				}
 			},
-			formIsValid: false,
-			loading: false
+			formIsValid: false
 		}
 	}
 
 	orderHandler = (event)=>{
 		event.preventDefault();
-		console.log("clicked", this.props.ingredients, this.props.totalPrice);
-		this.setState({loading: true});
 
 		const formData = {};
 		for(let formElementIdentifier in this.state.orderForm){
@@ -114,15 +117,7 @@ class ContactData extends Component {
 			orderData: formData
         };
 
-        axiosinstance.post('/orders.json', order).then(
-            response=>{
-                this.setState({loading: false});
-				this.props.history.push('/');
-                console.log(response);
-            }).catch(err=>{
-                this.setState({loading: false});
-                console.log(err);
-            });
+		this.props.toOrderBurger(order);
 	}
 
 	validateEmail(email) {
@@ -211,7 +206,7 @@ class ContactData extends Component {
 			</form>
 		);
 
-		if(this.state.loading){
+		if(this.props.loading){
 			form = <Spinner />;
 		}
 
@@ -224,4 +219,16 @@ class ContactData extends Component {
 	}
 }
 
-export default ContactData;
+const mapStateToProps = (state, ownProps)=>({
+	ingredients: state.burgerBuilderReducer.ingredients,
+	totalPrice: state.burgerBuilderReducer.totalPrice,
+	loading: state.orderReducer.loading
+});
+
+const mapDispatchToProps = (dispatch, ownProps)=>{
+	return {
+		toOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
