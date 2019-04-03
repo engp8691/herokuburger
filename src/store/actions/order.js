@@ -61,7 +61,6 @@ export const fetchOrdersStart = (error)=>({
 	type: actionTypes.FETCH_ORDERS_START
 });
 
-
 export const fetchOrders = ()=>{
 	return (dispatch) => {
 		dispatch(fetchOrdersStart());
@@ -73,6 +72,8 @@ export const fetchOrders = ()=>{
 			allOrders = OrderArray.map((key)=>{
 				const ingredients = res.data[key].ingredients;
 				const totalPrice = (+res.data[key].price).toFixed(2);
+
+				console.log(76, ingredients, totalPrice);
 
 				return (<Order key={key} ingredients={ingredients} totalPrice={totalPrice} />);
 			});

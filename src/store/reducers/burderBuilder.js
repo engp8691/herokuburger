@@ -1,4 +1,5 @@
 import * as actions from '../actions/actionTypes';
+import * as utilities from '../utility';
 
 const initialState = {
 	ingredients: null,
@@ -17,23 +18,23 @@ const INGREDIENT_PRICES={
 const burgerBuilder = (state=initialState, action) => {
 	switch (action.type){
 		case actions.ADD_INGREDIENT:
-			return {
-				...state,
-				ingredients: {
-					...state.ingredients,
-					[action.ingredientName]: state.ingredients[action.ingredientName]+1
-				},
+			let updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName]+1 };
+			let updatedIngredients = utilities.updateObject( state.ingredients, updatedIngredient );
+			let newState = {
+				ingredients: updatedIngredients,
 				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-			}
+			};
+			return {...state, ...newState};
+
 		case actions.REMOVE_INGREDIENT:
-			return {
-				...state,
-				ingredients: {
-					...state.ingredients,
-					[action.ingredientName]: state.ingredients[action.ingredientName]-1
-				},
+			updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName]-1 };
+			updatedIngredients = utilities.updateObject( state.ingredients, updatedIngredient );
+			newState = {
+				ingredients: updatedIngredients,
 				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-			}
+			};
+			return {...state, ...newState};
+
 		case actions.INIT_INGREDIENTS:
 			let initPrice = 4.0;
 			for (let ingr in action.ingredients) {
