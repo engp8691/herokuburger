@@ -5,6 +5,7 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout.js';
 import Orders from './containers/Orders/Orders.js';
+import Auth from './containers/Auth/Auth.js';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ class App extends Component {
 			<Switch>
 				<Route path='/checkout' component={Checkout} />
 				<Route path='/orders' component={Orders} />
+				<Route path='/auth' component={Auth} />
 				<Route path='/' component={BurgerBuilder} />
 			</Switch>
 		</Layout>
