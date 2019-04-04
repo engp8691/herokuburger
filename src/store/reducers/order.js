@@ -14,10 +14,10 @@ const reducer = (state=initialState, action)=>{
 				purchased: false
 			}
 		case actionTypes.PURCHASE_BURGER_SUCCESS:
-			const newOrder = {
-				...action.orderData,
-				id: action.orderID
-			}
+			// const newOrder = {
+			// 	...action.orderData,
+			// 	id: action.orderID
+			// }
 			return{
 				...state,
 				loading: false,
