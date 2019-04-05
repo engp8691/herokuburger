@@ -5,8 +5,6 @@ import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger = (props)=>{
-	console.log(6, props);
-
 	let otherIngredients = [];
 
 /*

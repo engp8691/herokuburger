@@ -59,7 +59,6 @@ class Auth extends Component {
 		updatedElement.value=event.target.value;
 		updatedElement.touched = true;
 		updatedElement.valid=this.checkValidity(updatedElement.value, updatedElement.validation);
-		// console.log(140, updatedElement);
 		updatedOrderForm[inputIdentifier] = updatedElement;
 
 		let formIsValid = true;
@@ -112,13 +111,10 @@ class Auth extends Component {
 	submitHandler = (e)=>{
 		e.preventDefault();
 
-		console.log(this.state.controls.email.value, this.state.controls.password.value);
-
 		this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
 	}
 
 	switchAuthModeHandler = ()=>{
-	console.log(113);
 		this.setState(prevState => {
 			return {isSignup: !prevState.isSignup};
 		});
@@ -184,8 +180,6 @@ class Auth extends Component {
 }
 
 const mapStateToProps = (state, ownProps)=>{
-	console.log(166, state);
-
 	return {
 		loading: state.authReducer.loading,
 		token: state.authReducer.token,

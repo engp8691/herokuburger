@@ -30,7 +30,6 @@ const withErrorHandler = (WrappedComponent, axios)=>{
 		}
 
 		componentDidUpdate(){
-			console.log(33, "componentDidUpdate");
 		}
 
 		componentDidMount(){
@@ -44,8 +43,6 @@ const withErrorHandler = (WrappedComponent, axios)=>{
 		}
 
 		render(){
-			console.log("hoc", this.state.error);
-
 			return (
 				<>
 					<Modal

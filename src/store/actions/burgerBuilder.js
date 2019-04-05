@@ -45,12 +45,10 @@ export const initIngredient = () => {
 				dispatch(setIngredients(response.data));
 				dispatch(setLoading(false));
 				dispatch(setError(false));
-				console.log(response);
 			}).catch(err=>{
 				dispatch(setIngredients(null));
 				dispatch(setLoading(false));
 				dispatch(setError(err));
-				console.log(err);
 			});
 	};
 }

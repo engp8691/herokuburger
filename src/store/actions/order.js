@@ -62,8 +62,6 @@ export const fetchOrdersStart = (error)=>({
 });
 
 export const fetchOrders = (token)=>{
-	console.log(68, token);
-
 	return (dispatch) => {
 		dispatch(fetchOrdersStart());
 
@@ -75,14 +73,11 @@ export const fetchOrders = (token)=>{
 				const ingredients = res.data[key].ingredients;
 				const totalPrice = (+res.data[key].price).toFixed(2);
 
-				console.log(76, ingredients, totalPrice);
-
 				return (<Order key={key} ingredients={ingredients} totalPrice={totalPrice} />);
 			});
 
 			dispatch(fetchOrdersSucess({loading: false, orders: allOrders}));
 		}).catch(err => {
-			console.log(83, err);
 			dispatch(fetchOrdersFail({error: err, loading: false}));
 		});
 	}
