@@ -7,37 +7,66 @@ export const authStart = () => {
 	}
 }
 
-export const authSuccess = (authData) => {
+export const authSuccess = (token, userId) => {
 	return {
 		type: actionTypes.AUTH_SUCCESS,
-		authData: authData
+		token: token,
+		userId: userId
 	}
 }
 
-export const authFail = (error)=>{
+export const authFail = (errMsg)=>{
 	return {
 		type: actionTypes.AUTH_FAIL,
-		error: error
+		errMsg: errMsg
 	}
 }
 
-export const auth = (email, password) => {
+export const authLogout = ()=>{
+	console.log("authLogout");
+
+	return {
+		type: actionTypes.AUTH_LOGOUT
+	}
+}
+
+export const checkAuthTimeout = (expiresIn)=>{
+	console.log(32, expiresIn);
+
+	return (dispatch)=>{
+		setTimeout(()=>{dispatch(authLogout());}, expiresIn);
+	}
+}
+
+export const auth = (email, password, isSignup) => {
 	return (dispatch)=>{
 		dispatch(authStart());
+
 		const authData = {
 			email: email,
 			password: password,
 			returnSecureToken: true
 		};
 
-		console.log(authData);
+		let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyD8EN0WOAKFkby41VXc32J7lugZKk19RKk';
+		if(!isSignup){
+			url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyD8EN0WOAKFkby41VXc32J7lugZKk19RKk';
+		}
 
-axiosinstance.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyD8EN0WOAKFkby41VXc32J7lugZKk19RKk', authData).then(
-	response=>{
-		console.log(30, response);
-	}).catch(err=>{
-		console.log(33, err);
-	});
+		axiosinstance.post(url, authData).then(response=>{
+			dispatch(authSuccess(response.data.idToken, response.data.localId));
+			dispatch(checkAuthTimeout(response.data.expiresIn*1000));
+			console.log(30, response);
+		}).catch(err=>{
+			dispatch(authFail(err.response.data.error.message));
+		});
+	}
+}
+
+export const setAuthRedirectPath = (path)=>{
+	return {
+		type: actionTypes.SET_AUTH_REDIRECT_PATH,
+		path: path
 	}
 }
 

@@ -41,6 +41,7 @@ const reducer = (state=initialState, action)=>{
 				loading: action.result.loading
 			}
 		case actionTypes.FETCH_ORDERS_FAIL:
+			console.log(44, action.result);
 			return{
 				...state,
 				orders: null,

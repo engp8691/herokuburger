@@ -10,10 +10,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import burgerReducer from './store/reducers/burderBuilder';
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
 
 const rootReducer = combineReducers({
 	burgerBuilderReducer: burgerReducer,
-	orderReducer: orderReducer
+	orderReducer: orderReducer,
+	authReducer: authReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

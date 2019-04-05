@@ -24,11 +24,11 @@ export const purchaseBurgerStart  = () => {
 	};
 }
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
 	return (dispatch) => {
 		dispatch(purchaseBurgerStart());
 
-		axiosinstance.post('/orders.json', orderData).then(
+		axiosinstance.post('/orders.json?auth='+token, orderData).then(
 			response=>{
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
 			}).catch(err=>{
@@ -61,11 +61,13 @@ export const fetchOrdersStart = (error)=>({
 	type: actionTypes.FETCH_ORDERS_START
 });
 
-export const fetchOrders = ()=>{
+export const fetchOrders = (token)=>{
+	console.log(68, token);
+
 	return (dispatch) => {
 		dispatch(fetchOrdersStart());
 
-		axiosinstance.get('orders.json').then(res =>{
+		axiosinstance.get('orders.json?auth=' + token).then(res =>{
 			const OrderArray = Object.keys(res.data);
 
 			let allOrders = [];
@@ -80,6 +82,7 @@ export const fetchOrders = ()=>{
 
 			dispatch(fetchOrdersSucess({loading: false, orders: allOrders}));
 		}).catch(err => {
+			console.log(83, err);
 			dispatch(fetchOrdersFail({error: err, loading: false}));
 		});
 	}

@@ -44,6 +44,8 @@ const withErrorHandler = (WrappedComponent, axios)=>{
 		}
 
 		render(){
+			console.log("hoc", this.state.error);
+
 			return (
 				<>
 					<Modal

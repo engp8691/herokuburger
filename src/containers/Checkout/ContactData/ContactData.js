@@ -117,7 +117,7 @@ class ContactData extends Component {
 			orderData: formData
         };
 
-		this.props.toOrderBurger(order);
+		this.props.toOrderBurger(order, this.props.token);
 	}
 
 	validateEmail(email) {
@@ -222,12 +222,13 @@ class ContactData extends Component {
 const mapStateToProps = (state, ownProps)=>({
 	ingredients: state.burgerBuilderReducer.ingredients,
 	totalPrice: state.burgerBuilderReducer.totalPrice,
-	loading: state.orderReducer.loading
+	loading: state.orderReducer.loading,
+	token: state.authReducer.token
 });
 
 const mapDispatchToProps = (dispatch, ownProps)=>{
 	return {
-		toOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+		toOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
 	}
 }
 
