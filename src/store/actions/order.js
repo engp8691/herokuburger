@@ -61,11 +61,14 @@ export const fetchOrdersStart = (error)=>({
 	type: actionTypes.FETCH_ORDERS_START
 });
 
-export const fetchOrders = (token)=>{
+export const fetchOrders = (token, userId)=>{
 	return (dispatch) => {
 		dispatch(fetchOrdersStart());
 
-		axiosinstance.get('orders.json?auth=' + token).then(res =>{
+		const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+		console.log(69, queryParams);
+
+		axiosinstance.get('orders.json' + queryParams).then(res =>{
 			const OrderArray = Object.keys(res.data);
 
 			let allOrders = [];

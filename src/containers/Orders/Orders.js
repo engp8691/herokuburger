@@ -9,11 +9,11 @@ class Orders extends Component {
 	constructor(props){
 		super(props);
 
-		this.props.fetchOrders(this.props.token);
+		this.props.fetchOrders(this.props.token, this.props.userId);
 	}
 
 	componentDidMount(){
-		this.props.fetchOrders(this.props.token);
+		this.props.fetchOrders(this.props.token, this.props.userId);
 	}
 
 	render (){
@@ -32,11 +32,12 @@ class Orders extends Component {
 const mapStateToProps = (state, ownProps)=>({
 	orders: state.orderReducer.orders,
 	loading: state.orderReducer.loading,
-	token: state.authReducer.token
+	token: state.authReducer.token,
+	userId: state.authReducer.userId
 });
 
 const mapDispatchToProps = (dispatch, ownProps)=>({
-	fetchOrders: (token)=>{dispatch(actions.fetchOrders(token))}
+	fetchOrders: (token, userId)=>{dispatch(actions.fetchOrders(token, userId))}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axiosinstance));
