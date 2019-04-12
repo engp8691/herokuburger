@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes.js';
-import axiosinstance from '../../axios-orders';
 
+// no more thunk as middle ware here
 export const authStart = () => {
 	return {
 		type: actionTypes.AUTH_START
@@ -22,50 +22,37 @@ export const authFail = (errMsg)=>{
 	}
 }
 
-export const authLogout = ()=>{
-	console.log("authLogout");
-	localStorage.setItem('token', '');
-	localStorage.setItem('localId', '');
-	localStorage.setItem('expirationDate', '');
+export const authLogoutRequested = ()=>{
+	return {
+		type: actionTypes.AUTH_LOGOUT_REQUESTED
+	}
+}
 
+export const authLogout = ()=>{
+	return {
+		type: actionTypes.AUTH_LOGOUT_REQUESTED
+	}
+}
+
+export const authLogoutSucceed = ()=>{
 	return {
 		type: actionTypes.AUTH_LOGOUT
 	}
 }
 
 export const checkAuthTimeout = (expiresIn)=>{
-	return (dispatch)=>{
-		setTimeout(()=>{dispatch(authLogout());}, expiresIn);
+	return {
+		type: actionTypes.AUTH_CHECK_TIMEOUT,
+		expiresIn: expiresIn
 	}
 }
 
 export const auth = (email, password, isSignup) => {
-	return (dispatch)=>{
-		dispatch(authStart());
-
-		const authData = {
-			email: email,
-			password: password,
-			returnSecureToken: true
-		};
-
-		let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyD8EN0WOAKFkby41VXc32J7lugZKk19RKk';
-		if(!isSignup){
-			url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyD8EN0WOAKFkby41VXc32J7lugZKk19RKk';
-		}
-
-		axiosinstance.post(url, authData).then(response=>{
-			const expirationDate = new Date(new Date().getTime() + response.data.expiresIn*1000);
-			localStorage.setItem('token', response.data.idToken);
-			localStorage.setItem('expirationDate', expirationDate);
-			localStorage.setItem('localId', response.data.localId);
-			
-			dispatch(authSuccess(response.data.idToken, response.data.localId));
-			dispatch(checkAuthTimeout(response.data.expiresIn*1000));
-			console.log(65, response);
-		}).catch(err=>{
-			dispatch(authFail(err.response.data.error.message));
-		});
+	return {
+		type: actionTypes.AUTH_LOGIN_REQUESTED,
+		email: email,
+		password: password,
+		isSignup: isSignup
 	}
 }
 
@@ -77,22 +64,8 @@ export const setAuthRedirectPath = (path)=>{
 }
 
 export const authCheckState = ()=>{
-	return (dispatch)=>{
-		const token = localStorage.getItem('token');
-		if(!token){
-			dispatch(authLogout());
-		}else{
-			const expirationDate = new Date(localStorage.getItem('expirationDate'));
-
-			if(expirationDate < new Date()){
-				alert("Caobi");
-				dispatch(authLogout());
-			}else{
-				const localId = localStorage.getItem('localId');
-				dispatch(authSuccess(token, localId));
-				dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));
-			}
-		}
+	return {
+		type: actionTypes.AUTH_CHECK_STATE
 	}
 }
 
