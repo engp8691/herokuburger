@@ -20,6 +20,7 @@ export {
 	authStart,
 	authFail,
 	authSuccess,
-	checkAuthTimeout
+	checkAuthTimeout,
+	toggleSideDrawer
 } from './auth';
 

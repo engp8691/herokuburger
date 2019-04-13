@@ -1,52 +1,52 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import * as actions from '../../store/actions/index';
 
 import classes from './Layout.module.css';
 
-class Layout extends Component {
-	constructor(props){
-		super(props);
+const layout = (props) => {
+	const [sideDrawerVisible, setSideDrawerVisible] = useState(false);
 
-		this.state = {
-			showSideDrawer: false
-		}
-	}
+	const sideDrawerClosedHandler = ()=>{
+		props.bringUpSideDrawer(false);
+		setSideDrawerVisible(false);
+	};
 
-	sideDrawerClosedHandler = ()=>{
-		this.setState({showSideDrawer: false});
-	}
+	const sideDrawerToggleHandler = ()=>{
+		props.bringUpSideDrawer(true);
+		setSideDrawerVisible(true);
+	};
 
-	sideDrawerToggleHandler = ()=>{
-		this.setState((prevState)=>{
-			return {showSideDrawer: !prevState.showSideDrawer}
-		});
-	}
+	let sideDrawer = (<SideDrawer isAuthenticated={props.isAuthenticated} closehandler={sideDrawerClosedHandler} open={props.sideDrawerVisible} />);
+	sideDrawer = (props.sideDrawerVisible || sideDrawerVisible) ? sideDrawer : null;
 
-	render(){
-		return (
-			<>
-				<Toolbar isAuthenticated = {this.props.isAuthenticated} showSideDraw={this.sideDrawerToggleHandler} />
-				{
-					this.state.showSideDrawer ? (<SideDrawer isAuthenticated = {this.props.isAuthenticated} closehandler = {this.sideDrawerClosedHandler} open = {this.state.showSideDrawer} />) : null
-				}
-
-				<main className={classes.Content}>
-					{this.props.children}
-				</main>
-			</>
-		)
-	}
+	return (
+		<>
+			<Toolbar isAuthenticated = {props.isAuthenticated} showSideDraw={sideDrawerToggleHandler} />
+			{ sideDrawer }
+			<main className={classes.Content}>
+				{props.children}
+			</main>
+		</>
+	)
 }
 
 const mapStateToProps = (state, ownProps) => {
 	return{
-		isAuthenticated: state.authReducer.token !== null
+		isAuthenticated: state.authReducer.token !== null,
+		sideDrawerVisible: state.authReducer.sideDrawerVisible
 	}
 }
 
-export default connect(mapStateToProps, null)(Layout);
+const mapDispatchToProps = (dispatch, ownProps)=>{
+	return {
+		bringUpSideDrawer: (visibleFlag) => dispatch(actions.toggleSideDrawer(visibleFlag))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(layout);
 

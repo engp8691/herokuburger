@@ -44,6 +44,11 @@ const reducer = (state=initialState, action)=>{
 				...state,
 				authRedirectPath: action.path
 			}
+		case actionTypes.SIDEDRAWER_VISIBILITY:
+			return {
+				...state,
+				sideDrawerVisible: action.sideDrawerVisible
+			}
 		default:
 			return state;
 	}

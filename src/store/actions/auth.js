@@ -69,3 +69,10 @@ export const authCheckState = ()=>{
 	}
 }
 
+export const toggleSideDrawer = (sideDrawerVisible)=>{
+	return {
+		type: actionTypes.SIDEDRAWER_VISIBILITY,
+		sideDrawerVisible: sideDrawerVisible
+	}
+}
+

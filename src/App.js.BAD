@@ -37,9 +37,9 @@ const app = (props) => {
 	if(props.isAuthenticated){
 		routes = (
 			<Switch>
-				<Route path='/checkout' component={Checkout} />
-				<Route path='/orders'   component={Orders} />
-				<Route path='/auth'     component={Auth} />
+				<Route path='/checkout' render={()=> <Checkout />} />
+				<Route path='/orders'   render={()=> <Orders />} />
+				<Route path='/auth'     render={()=> <Auth />} />
 				<Route path='/logout' component={Logout} />
 				<Route path='/' component={BurgerBuilder} />
 				<Redirect to='/' />
